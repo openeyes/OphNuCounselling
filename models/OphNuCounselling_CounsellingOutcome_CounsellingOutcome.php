@@ -17,7 +17,7 @@
  */
 
 /**
- * This is the model class for table "ophnucounselling_counsellingcomments_counselling_outcome".
+ * This is the model class for table "ophnucounselling_counsellingoutcome_counselling_outcome".
  *
  * The followings are the available columns in table:
  * @property string $id
@@ -48,7 +48,7 @@ class OphNuCounselling_CounsellingOutcome_CounsellingOutcome extends BaseActiveR
 	 */
 	public function tableName()
 	{
-		return 'ophnucounselling_counsellingcomments_counselling_outcome';
+		return 'ophnucounselling_counsellingoutcome_counselling_outcome';
 	}
 
 	/**

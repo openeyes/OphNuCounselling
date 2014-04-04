@@ -18,7 +18,7 @@
  */
 
 /**
- * This is the model class for table "et_ophnucounselling_counsellingcomments".
+ * This is the model class for table "et_ophnucounselling_counsellingoutcome".
  *
  * The followings are the available columns in table:
  * @property string $id
@@ -54,7 +54,7 @@ class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophnucounselling_counsellingcomments';
+		return 'et_ophnucounselling_counsellingoutcome';
 	}
 
 	/**

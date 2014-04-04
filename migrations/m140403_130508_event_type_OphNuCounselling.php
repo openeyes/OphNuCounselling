@@ -347,7 +347,7 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 				'CONSTRAINT `et_ophnucounselling_precounsellingemo_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
 
-		$this->createTable('ophnucounselling_counsellingcomments_counselling_outcome', array(
+		$this->createTable('ophnucounselling_counsellingoutcome_counselling_outcome', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'name' => 'varchar(128) COLLATE utf8_bin NOT NULL',
 				'display_order' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -356,20 +356,20 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'PRIMARY KEY (`id`)',
-				'KEY `ophnucounselling_counsellingcomments_counselling_outcome_lmui_fk` (`last_modified_user_id`)',
-				'KEY `ophnucounselling_counsellingcomments_counselling_outcome_cui_fk` (`created_user_id`)',
-				'CONSTRAINT `ophnucounselling_counsellingcomments_counselling_outcome_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `ophnucounselling_counsellingcomments_counselling_outcome_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
+				'KEY `ophnucounselling_counsellingoutcome_counselling_outcome_lmui_fk` (`last_modified_user_id`)',
+				'KEY `ophnucounselling_counsellingoutcome_counselling_outcome_cui_fk` (`created_user_id`)',
+				'CONSTRAINT `ophnucounselling_counsellingoutcome_counselling_outcome_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `ophnucounselling_counsellingoutcome_counselling_outcome_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
 
-		$this->insert('ophnucounselling_counsellingcomments_counselling_outcome',array('name'=>'Patient instructed to get glasses','display_order'=>1));
-		$this->insert('ophnucounselling_counsellingcomments_counselling_outcome',array('name'=>'Referred back to General Practioner for further medical treatment','display_order'=>2));
-		$this->insert('ophnucounselling_counsellingcomments_counselling_outcome',array('name'=>'Referred to Social Worker','display_order'=>3));
-		$this->insert('ophnucounselling_counsellingcomments_counselling_outcome',array('name'=>'Other','display_order'=>4));
+		$this->insert('ophnucounselling_counsellingoutcome_counselling_outcome',array('name'=>'Patient instructed to get glasses','display_order'=>1));
+		$this->insert('ophnucounselling_counsellingoutcome_counselling_outcome',array('name'=>'Referred back to General Practioner for further medical treatment','display_order'=>2));
+		$this->insert('ophnucounselling_counsellingoutcome_counselling_outcome',array('name'=>'Referred to Social Worker','display_order'=>3));
+		$this->insert('ophnucounselling_counsellingoutcome_counselling_outcome',array('name'=>'Other','display_order'=>4));
 
 
 
-		$this->createTable('et_ophnucounselling_counsellingcomments', array(
+		$this->createTable('et_ophnucounselling_counsellingoutcome', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
 				'event_id' => 'int(10) unsigned NOT NULL',
 				'counselling_outcome_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
@@ -381,14 +381,14 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 				'created_user_id' => 'int(10) unsigned NOT NULL DEFAULT 1',
 				'created_date' => 'datetime NOT NULL DEFAULT \'1901-01-01 00:00:00\'',
 				'PRIMARY KEY (`id`)',
-				'KEY `et_ophnucounselling_counsellingcomments_lmui_fk` (`last_modified_user_id`)',
-				'KEY `et_ophnucounselling_counsellingcomments_cui_fk` (`created_user_id`)',
-				'KEY `et_ophnucounselling_counsellingcomments_ev_fk` (`event_id`)',
-				'KEY `ophnucounselling_counsellingcomments_counselling_outcome_fk` (`counselling_outcome_id`)',
-				'CONSTRAINT `et_ophnucounselling_counsellingcomments_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `et_ophnucounselling_counsellingcomments_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
-				'CONSTRAINT `et_ophnucounselling_counsellingcomments_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
-				'CONSTRAINT `ophnucounselling_counsellingcomments_counselling_outcome_fk` FOREIGN KEY (`counselling_outcome_id`) REFERENCES `ophnucounselling_counsellingcomments_counselling_outcome` (`id`)',
+				'KEY `et_ophnucounselling_counsellingoutcome_lmui_fk` (`last_modified_user_id`)',
+				'KEY `et_ophnucounselling_counsellingoutcome_cui_fk` (`created_user_id`)',
+				'KEY `et_ophnucounselling_counsellingoutcome_ev_fk` (`event_id`)',
+				'KEY `ophnucounselling_counsellingoutcome_counselling_outcome_fk` (`counselling_outcome_id`)',
+				'CONSTRAINT `et_ophnucounselling_counsellingoutcome_lmui_fk` FOREIGN KEY (`last_modified_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `et_ophnucounselling_counsellingoutcome_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
+				'CONSTRAINT `et_ophnucounselling_counsellingoutcome_ev_fk` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)',
+				'CONSTRAINT `ophnucounselling_counsellingoutcome_counselling_outcome_fk` FOREIGN KEY (`counselling_outcome_id`) REFERENCES `ophnucounselling_counsellingoutcome_counselling_outcome` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
 
 
@@ -494,10 +494,10 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 
 
 
-		$this->dropTable('et_ophnucounselling_counsellingcomments');
+		$this->dropTable('et_ophnucounselling_counsellingoutcome');
 
 
-		$this->dropTable('ophnucounselling_counsellingcomments_counselling_outcome');
+		$this->dropTable('ophnucounselling_counsellingoutcome_counselling_outcome');
 
 		$this->dropTable('et_ophnucounselling_counsellingcomments');
 
