@@ -27,9 +27,8 @@
 		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
 	</header>
 
-		<div class="element-fields">
-			<?php echo $form->radioButtons($element, 'translator_present_id', 'ophnucounselling_translator_translator_present')?>
-	<?php echo $form->textField($element, 'name', array('size' => '10'))?>
+	<div class="element-fields">
+		<?php echo $form->radioButtons($element, 'translator_present_id', 'ophnueducation_translator_translator_present', null, false, false, false, false, array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->textField($element, 'name', array('hide' => !$element->translator_present || $element->translator_present->name != 'Yes'), array(), array('label' => 3, 'field' => 4))?>
 	</div>
-	
 </section>

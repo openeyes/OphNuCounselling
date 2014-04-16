@@ -18,7 +18,7 @@
  */
 
 /**
- * This is the model class for table "et_ophnucounselling_counsellingoutcome".
+ * This is the model class for table "et_ophnucounselling_counselling".
  *
  * The followings are the available columns in table:
  * @property string $id
@@ -36,10 +36,8 @@
  * @property OphNuCounselling_CounsellingOutcome_CounsellingOutcome $counselling_outcome
  */
 
-class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
+class Element_OphNuCounselling_Counselling extends  BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -54,7 +52,7 @@ class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophnucounselling_counsellingoutcome';
+		return 'et_ophnucounselling_counselling';
 	}
 
 	/**
@@ -64,7 +62,7 @@ class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
 	{
 		return array(
 			array('event_id, counselling_outcome_id, other_comments, ', 'safe'),
-			array('counselling_outcome_id, other_comments, ', 'required'),
+			array('counselling_outcome_id', 'required'),
 			array('id, event_id, counselling_outcome_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -80,6 +78,8 @@ class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
+			'pre_emotions' => array(self::MANY_MANY, 'OphNuCounselling_Emotion', 'ophnucounselling_pre_emotion_assignment(element_id, emotion_id)', 'order' => 'pre_emotions.display_order asc'),
+			'post_emotions' => array(self::MANY_MANY, 'OphNuCounselling_Emotion', 'ophnucounselling_post_emotion_assignment(element_id, emotion_id)', 'order' => 'post_emotions.display_order asc'),
 			'counselling_outcome' => array(self::BELONGS_TO, 'OphNuCounselling_CounsellingOutcome_CounsellingOutcome', 'counselling_outcome_id'),
 		);
 	}
@@ -92,8 +92,8 @@ class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'counselling_outcome_id' => 'Counselling Outcome',
-			'other_comments' => 'Other Comments',
+			'counselling_outcome_id' => 'Counselling outcome',
+			'other_comments' => 'Other outcome',
 		);
 	}
 
@@ -115,12 +115,67 @@ class Element_OphNuCounselling_CounsellingOutcome  extends  BaseEventTypeElement
 		));
 	}
 
-
-
-	protected function afterSave()
+	public function beforeValidate()
 	{
+		if ($this->counselling_outcome && $this->counselling_outcome->name == 'Other (please specify)') {
+			if (!$this->other_comments) {
+				$this->addError('other_comments','Please specify the counselling outcome');
+			}
+		}
 
-		return parent::afterSave();
+		if (!$this->pre_emotions) {
+			$this->addError('pre_emotions','Please select at least one pre-counselling emotion');
+		}
+
+		if (!$this->post_emotions) {
+			$this->addError('post_emotions','Please select at least one post-counselling emotion');
+		}
+
+		return parent::beforeValidate();
+	}
+
+	public function updatePreEmotions($emotion_ids)
+	{
+		foreach ($emotion_ids as $emotion_id) {
+			if (!$assignment = OphNuCounselling_Pre_Emotion_Assignment::model()->find('element_id=? and emotion_id=?',array($this->id,$emotion_id))) {
+				$assignment = new OphNuCounselling_Pre_Emotion_Assignment;
+				$assignment->element_id = $this->id;
+				$assignment->emotion_id = $emotion_id;
+
+				if (!$assignment->save()) {
+					throw new Exception("Unable to save pre emotion assignment: ".print_r($assignment->getErrors(),true));
+				}
+			}
+		}
+
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('element_id = :element_id');
+		$criteria->params[':element_id'] = $this->id;
+		$criteria->addNotInCondition('emotion_id',$emotion_ids);
+
+		OphNuCounselling_Pre_Emotion_Assignment::model()->deleteAll($criteria);
+	}
+
+	public function updatePostEmotions($emotion_ids)
+	{
+		foreach ($emotion_ids as $emotion_id) {
+			if (!$assignment = OphNuCounselling_Post_Emotion_Assignment::model()->find('element_id=? and emotion_id=?',array($this->id,$emotion_id))) {
+				$assignment = new OphNuCounselling_Post_Emotion_Assignment;
+				$assignment->element_id = $this->id;
+				$assignment->emotion_id = $emotion_id;
+
+				if (!$assignment->save()) {
+					throw new Exception("Unable to save post emotion assignment: ".print_r($assignment->getErrors(),true));
+				}
+			}
+		}
+
+		$criteria = new CDbCriteria;
+		$criteria->addCondition('element_id = :element_id');
+		$criteria->params[':element_id'] = $this->id;
+		$criteria->addNotInCondition('emotion_id',$emotion_ids);
+
+		OphNuCounselling_Post_Emotion_Assignment::model()->deleteAll($criteria);
 	}
 }
 ?>

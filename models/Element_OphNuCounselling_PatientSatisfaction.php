@@ -37,8 +37,6 @@
 
 class Element_OphNuCounselling_PatientSatisfaction  extends  BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -90,8 +88,8 @@ class Element_OphNuCounselling_PatientSatisfaction  extends  BaseEventTypeElemen
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'satisfaction_level' => 'What is the patients satisfaction level',
-			'reason_for_satisfaction_level' => 'Reason for Satisfaction Level',
+			'satisfaction_level' => 'Patient satisfaction level',
+			'reason_for_satisfaction_level' => 'Reason for satisfaction level',
 		);
 	}
 
@@ -111,14 +109,6 @@ class Element_OphNuCounselling_PatientSatisfaction  extends  BaseEventTypeElemen
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
-	}
-
-
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
 	}
 }
 ?>

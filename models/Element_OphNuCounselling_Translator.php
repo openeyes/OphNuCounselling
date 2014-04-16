@@ -38,8 +38,6 @@
 
 class Element_OphNuCounselling_Translator  extends  BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -63,8 +61,8 @@ class Element_OphNuCounselling_Translator  extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, translator_present_id, name, ', 'safe'),
-			array('translator_present_id, name, ', 'required'),
+			array('event_id, translator_present_id, name', 'safe'),
+			array('translator_present_id', 'required'),
 			array('id, event_id, translator_present_id, name, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -92,8 +90,8 @@ class Element_OphNuCounselling_Translator  extends  BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'translator_present_id' => 'Translator Present',
-			'name' => 'Name',
+			'translator_present_id' => 'Translator present',
+			'name' => 'Translator name',
 		);
 	}
 
@@ -115,12 +113,13 @@ class Element_OphNuCounselling_Translator  extends  BaseEventTypeElement
 		));
 	}
 
-
-
-	protected function afterSave()
+	public function beforeValidate()
 	{
+		if ($this->translator_present && $this->translator_present->name == 'Yes' && strlen($this->name) <1) {
+			$this->addError('name',$this->getAttributeLabel('name').' cannot be blank.');
+		}
 
-		return parent::afterSave();
+		return parent::beforeValidate();
 	}
 }
 ?>

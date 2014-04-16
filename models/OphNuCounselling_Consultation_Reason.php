@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -18,17 +17,11 @@
  */
 
 /**
- * This is the model class for table "et_ophnucounselling_postcounsellingstatu".
+ * This is the model class for table "ophnucounselling_consultation_reason".
  *
  * The followings are the available columns in table:
  * @property string $id
- * @property integer $event_id
- * @property integer $agreeable
- * @property integer $disagree
- * @property integer $disappointed
- * @property integer $agitated
- * @property integer $angry
- * @property integer $anxious
+ * @property string $name
  *
  * The followings are the available model relations:
  *
@@ -39,10 +32,8 @@
  * @property User $usermodified
  */
 
-class Element_OphNuCounselling_PostCounsellingStatus  extends  BaseEventTypeElement
+class OphNuCounselling_Consultation_Reason extends BaseActiveRecord
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -57,7 +48,7 @@ class Element_OphNuCounselling_PostCounsellingStatus  extends  BaseEventTypeElem
 	 */
 	public function tableName()
 	{
-		return 'et_ophnucounselling_postcounsellingstatu';
+		return 'ophnucounselling_consultation_reason';
 	}
 
 	/**
@@ -66,9 +57,9 @@ class Element_OphNuCounselling_PostCounsellingStatus  extends  BaseEventTypeElem
 	public function rules()
 	{
 		return array(
-			array('event_id, agreeable, disagree, disappointed, agitated, angry, anxious, ', 'safe'),
-			array('agreeable, disagree, disappointed, agitated, angry, anxious, ', 'required'),
-			array('id, event_id, agreeable, disagree, disappointed, agitated, angry, anxious, ', 'safe', 'on' => 'search'),
+			array('name', 'safe'),
+			array('name', 'required'),
+			array('id, name', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -93,13 +84,7 @@ class Element_OphNuCounselling_PostCounsellingStatus  extends  BaseEventTypeElem
 	{
 		return array(
 			'id' => 'ID',
-			'event_id' => 'Event',
-			'agreeable' => 'Agreeable',
-			'disagree' => 'Disagree',
-			'disappointed' => 'Disappointed',
-			'agitated' => 'Agitated',
-			'angry' => 'Angry',
-			'anxious' => 'Anxious',
+			'name' => 'Name',
 		);
 	}
 
@@ -112,25 +97,11 @@ class Element_OphNuCounselling_PostCounsellingStatus  extends  BaseEventTypeElem
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('agreeable', $this->agreeable);
-		$criteria->compare('disagree', $this->disagree);
-		$criteria->compare('disappointed', $this->disappointed);
-		$criteria->compare('agitated', $this->agitated);
-		$criteria->compare('angry', $this->angry);
-		$criteria->compare('anxious', $this->anxious);
+		$criteria->compare('name', $this->name, true);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
-	}
-
-
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
 	}
 }
 ?>

@@ -24,10 +24,10 @@
  * @property string $id
  * @property integer $event_id
  * @property integer $caregivers_present_id
- * @property integer $name_id
- * @property integer $relationship_id
- * @property string $name2
- * @property integer $relationship2_id
+ * @property integer $relationship_1_name
+ * @property integer $relationship_1_id
+ * @property string $relationship_2_name
+ * @property integer $relationship_2_id
  * @property integer $sw_present_id
  * @property string $sw1name
  * @property string $sw2name
@@ -40,16 +40,13 @@
  * @property User $user
  * @property User $usermodified
  * @property OphNuCounselling_CareGivers_CaregiversPresent $caregivers_present
- * @property OphNuCounselling_CareGivers_Name $name
- * @property OphNuCounselling_CareGivers_Relationship $relationship
+ * @property OphNuCounselling_CareGivers_Relationship1 $relationship1
  * @property OphNuCounselling_CareGivers_Relationship2 $relationship2
  * @property OphNuCounselling_CareGivers_SwPresent $sw_present
  */
 
-class Element_OphNuCounselling_CareGivers  extends  BaseEventTypeElement
+class Element_OphNuCounselling_CareGivers  extends	BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -73,9 +70,9 @@ class Element_OphNuCounselling_CareGivers  extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, caregivers_present_id, name_id, relationship_id, name2, relationship2_id, sw_present_id, sw1name, sw2name, ', 'safe'),
-			array('caregivers_present_id, name_id, relationship_id, name2, relationship2_id, sw_present_id, sw1name, sw2name, ', 'required'),
-			array('id, event_id, caregivers_present_id, name_id, relationship_id, name2, relationship2_id, sw_present_id, sw1name, sw2name, ', 'safe', 'on' => 'search'),
+			array('event_id, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name', 'safe'),
+			array('caregivers_present_id, sw_present_id', 'required'),
+			array('id, event_id, caregivers_present_id, name_id, relationship_id, name2, relationship2_id, sw_present_id, sw1name, sw2name', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -92,8 +89,8 @@ class Element_OphNuCounselling_CareGivers  extends  BaseEventTypeElement
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'caregivers_present' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_CaregiversPresent', 'caregivers_present_id'),
 			'name' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Name', 'name_id'),
-			'relationship' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Relationship', 'relationship_id'),
-			'relationship2' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Relationship2', 'relationship2_id'),
+			'relationship1' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Relationship', 'relationship_1_id'),
+			'relationship2' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Relationship', 'relationship_2_id'),
 			'sw_present' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_SwPresent', 'sw_present_id'),
 		);
 	}
@@ -106,14 +103,14 @@ class Element_OphNuCounselling_CareGivers  extends  BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'caregivers_present_id' => 'Caregivers Present',
-			'name_id' => 'Name',
-			'relationship_id' => 'Relationship',
-			'name2' => 'Name',
-			'relationship2_id' => 'Relationship',
-			'sw_present_id' => 'Social Workers Present',
-			'sw1name' => 'Name',
-			'sw2name' => 'Name',
+			'caregivers_present_id' => 'Caregivers present',
+			'relationship_1_name' => 'Caregiver name',
+			'relationship_1_id' => 'Relationship',
+			'relationship_2_name' => 'Caregiver name',
+			'relationship_2_id' => 'Relationship',
+			'sw_present_id' => 'Social workers present',
+			'sw1name' => 'Social worker name',
+			'sw2name' => 'Social worker name',
 		);
 	}
 
@@ -129,9 +126,9 @@ class Element_OphNuCounselling_CareGivers  extends  BaseEventTypeElement
 		$criteria->compare('event_id', $this->event_id, true);
 		$criteria->compare('caregivers_present_id', $this->caregivers_present_id);
 		$criteria->compare('name_id', $this->name_id);
-		$criteria->compare('relationship_id', $this->relationship_id);
+		$criteria->compare('relationship_1_id', $this->relationship_1_id);
 		$criteria->compare('name2', $this->name2);
-		$criteria->compare('relationship2_id', $this->relationship2_id);
+		$criteria->compare('relationship_2_id', $this->relationship_2_id);
 		$criteria->compare('sw_present_id', $this->sw_present_id);
 		$criteria->compare('sw1name', $this->sw1name);
 		$criteria->compare('sw2name', $this->sw2name);
@@ -141,12 +138,28 @@ class Element_OphNuCounselling_CareGivers  extends  BaseEventTypeElement
 		));
 	}
 
-
-
-	protected function afterSave()
+	public function beforeValidate()
 	{
+		if ($this->caregivers_present && $this->caregivers_present->name == 'Yes') {
+			if (!$this->relationship_1_name && !$this->relationship_2_name) {
+				$this->addError('relationship_1_name','You must enter at least one caregiver name');
+			} else {
+				if ($this->relationship_1_name && !$this->relationship_1_id) {
+					$this->addError('relationship_1_id',"Please specify the first caregivers relationship");
+				}
+				if ($this->relationship_2_name && !$this->relationship_2_id) {
+					$this->addError('relationship_2_id',"Please specify the second caregivers relationship");
+				}
+			}
+		}
 
-		return parent::afterSave();
+		if ($this->sw_present && $this->sw_present->name == 'Yes') {
+			if (!$this->sw1name && !$this->sw2name) {
+				$this->addError('sw1name','You must enter at least one social worker name');
+			}
+		}
+
+		return parent::beforeValidate();
 	}
 }
 ?>

@@ -1,4 +1,4 @@
-<?php
+/** OphNuCounselling module styles */
 /**
  * OpenEyes
  *
@@ -16,17 +16,15 @@
  * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
-?>
-
-<section class="element">
-	<header class="element-header">
-		<h3 class="element-title"><?php echo $element->elementType->name?></h3>
-	</header>
-
-		<div class="element-data">
-				<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('comments'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->comments)?></div></div>
-		</div>
-			</div>
-</section>
+/* line 17, ../sass/components/_event.scss */
+.event {
+  border-color: #aaaaaa;
+}
+/* line 19, ../sass/components/_event.scss */
+.event .event-content {
+  background-image: url('../img/watermark.png?1397569309');
+}
+/* line 22, ../sass/components/_event.scss */
+.event .event-title {
+  background-image: url('../img/medium.png?1397569309');
+}

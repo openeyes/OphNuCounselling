@@ -27,14 +27,11 @@
 		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
 	</header>
 
-		<div class="element-fields">
-			<?php echo $form->checkBox($element, 'agreeable')?>
-	<?php echo $form->checkBox($element, 'disagree')?>
-	<?php echo $form->checkBox($element, 'disapointed')?>
-	<?php echo $form->checkBox($element, 'agitated')?>
-	<?php echo $form->checkBox($element, 'angry')?>
-	<?php echo $form->checkBox($element, 'anxious')?>
-	<?php echo $form->checkBox($element, 'confused')?>
+	<div class="element-fields">
+		<?php echo $form->multiSelectList($element, 'OphNuCounselling_Pre_Emotions', 'pre_emotions', 'id', $this->getEmotionList($element,'pre_emotions'), array(), array('empty' => '- Please select -', 'label' => 'Pre-counselling emotions'),false,false,null,false,false,array('label' => 3, 'field'=>4))?>
+		<?php echo $form->dropDownList($element, 'counselling_outcome_id', CHtml::listData(OphNuCounselling_CounsellingOutcome_CounsellingOutcome::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),false,array('label'=>3,'field'=>4))?>
+		<?php echo $form->textArea($element, 'other_comments', array(), !$element->counselling_outcome || $element->counselling_outcome->name != 'Other (please specify)', array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->textArea($element, 'comments', array(), false, array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->multiSelectList($element, 'OphNuCounselling_Post_Emotions', 'post_emotions', 'id', $this->getEmotionList($element,'post_emotions'), array(), array('empty' => '- Please select -', 'label' => 'Post-counselling emotions'),false,false,null,false,false,array('label' => 3, 'field' => 4))?>
 	</div>
-	
 </section>

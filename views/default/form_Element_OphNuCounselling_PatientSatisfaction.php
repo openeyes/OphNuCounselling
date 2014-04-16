@@ -27,9 +27,8 @@
 		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
 	</header>
 
-		<div class="element-fields">
-			<?php echo $form->slider($element, 'satisfaction_level', array('min' => 1, 'max' => 10, 'step' => 1))?>
-	<?php echo $form->textArea($element, 'reason_for_satisfaction_level', array('rows' => 6, 'cols' => 80))?>
+	<div class="element-fields">
+		<?php echo $form->slider($element, 'satisfaction_level', array('min' => 1, 'max' => 10, 'step' => 1), array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->textArea($element, 'reason_for_satisfaction_level', array(), false, array(), array('label' => 3, 'field' => 4))?>
 	</div>
-	
 </section>

@@ -27,13 +27,9 @@
 		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
 	</header>
 
-		<div class="element-fields">
-			<?php echo $form->dropDownList($element, 'requested_by_id', CHtml::listData(OphNuCounselling_Consultation_RequestedBy::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'))?>
-	<?php echo $form->checkBox($element, 'not_accepted_for_surgery')?>
-	<?php echo $form->checkBox($element, 'family_education')?>
-	<?php echo $form->checkBox($element, 'surgery_not_needed')?>
-	<?php echo $form->checkBox($element, 'other')?>
-	<?php echo $form->radioBoolean($element, 'other_comments')?>
+	<div class="element-fields">
+		<?php echo $form->dropDownList($element, 'requested_by_id', CHtml::listData(OphNuCounselling_Consultation_RequestedBy::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),false,array('label' => 3,'field' => 4))?>
+		<?php echo $form->dropDownList($element, 'reason_id', CHtml::listData(OphNuCounselling_Consultation_Reason::model()->findAll(array('order' => 'display_order asc')),'id','name'), array('empty' => '- Please select -'),false,array('label' => 3, 'field' => 4))?>
+		<?php echo $form->textArea($element, 'other_comments', array(), !$element->reason || $element->reason->name != 'Other (please specify)', array(), array('label' => 3, 'field' => 4))?>
 	</div>
-	
 </section>

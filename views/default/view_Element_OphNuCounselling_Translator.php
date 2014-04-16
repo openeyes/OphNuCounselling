@@ -23,14 +23,16 @@
 		<h3 class="element-title"><?php echo $element->elementType->name?></h3>
 	</header>
 
-		<div class="element-data">
-				<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('translator_present_id'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo $element->translator_present ? $element->translator_present->name : 'None'?></div></div>
-		</div>
+	<div class="element-data">
 		<div class="row data-row">
-			<div class="large-2 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('name'))?></div></div>
-			<div class="large-10 column end"><div class="data-value"><?php echo CHtml::encode($element->name)?></div></div>
+			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('translator_present_id'))?>:</div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->translator_present ? $element->translator_present->name : 'None'?></div></div>
 		</div>
+		<?php if ($element->translator_present->name == 'Yes') {?>
+			<div class="row data-row">
+				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('name'))?>:</div></div>
+				<div class="large-9 column end"><div class="data-value"><?php echo CHtml::encode($element->name)?></div></div>
 			</div>
+		<?php }?>
+	</div>
 </section>

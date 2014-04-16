@@ -40,8 +40,6 @@
 
 class Element_OphNuCounselling_PatientId  extends  BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -95,9 +93,9 @@ class Element_OphNuCounselling_PatientId  extends  BaseEventTypeElement
 			'event_id' => 'Event',
 			'wrist_band_verified' => 'Wrist band verified with two identifiers',
 			'dob' => 'DOB',
-			'patient_name' => 'Patient Name',
-			'parent_caregiver' => 'Parent Caregiver',
-			'chart_number' => 'Chart Number',
+			'patient_name' => 'Patient mame',
+			'parent_caregiver' => 'Parent caregiver',
+			'chart_number' => 'Chart number',
 		);
 	}
 
@@ -120,14 +118,6 @@ class Element_OphNuCounselling_PatientId  extends  BaseEventTypeElement
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
-	}
-
-
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
 	}
 }
 ?>

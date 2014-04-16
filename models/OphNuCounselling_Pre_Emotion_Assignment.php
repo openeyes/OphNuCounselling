@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -18,12 +17,11 @@
  */
 
 /**
- * This is the model class for table "et_ophnucounselling_counsellingcomments".
+ * This is the model class for table "ophnucounselling_pre_emotion_assignment".
  *
  * The followings are the available columns in table:
  * @property string $id
- * @property integer $event_id
- * @property string $comments
+ * @property string $name
  *
  * The followings are the available model relations:
  *
@@ -34,10 +32,8 @@
  * @property User $usermodified
  */
 
-class Element_OphNuCounselling_CounsellingComments  extends  BaseEventTypeElement
+class OphNuCounselling_Pre_Emotion_Assignment extends BaseActiveRecord
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -52,7 +48,7 @@ class Element_OphNuCounselling_CounsellingComments  extends  BaseEventTypeElemen
 	 */
 	public function tableName()
 	{
-		return 'et_ophnucounselling_counsellingcomments';
+		return 'ophnucounselling_pre_emotion_assignment';
 	}
 
 	/**
@@ -61,9 +57,8 @@ class Element_OphNuCounselling_CounsellingComments  extends  BaseEventTypeElemen
 	public function rules()
 	{
 		return array(
-			array('event_id, comments, ', 'safe'),
-			array('comments, ', 'required'),
-			array('id, event_id, comments, ', 'safe', 'on' => 'search'),
+			array('element_id, emotion_id', 'safe'),
+			array('id, name', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -88,8 +83,7 @@ class Element_OphNuCounselling_CounsellingComments  extends  BaseEventTypeElemen
 	{
 		return array(
 			'id' => 'ID',
-			'event_id' => 'Event',
-			'comments' => 'Comments',
+			'name' => 'Name',
 		);
 	}
 
@@ -102,20 +96,11 @@ class Element_OphNuCounselling_CounsellingComments  extends  BaseEventTypeElemen
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('comments', $this->comments);
+		$criteria->compare('name', $this->name, true);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
-	}
-
-
-
-	protected function afterSave()
-	{
-
-		return parent::afterSave();
 	}
 }
 ?>

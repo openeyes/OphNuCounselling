@@ -24,10 +24,6 @@
  * @property string $id
  * @property integer $event_id
  * @property integer $requested_by_id
- * @property integer $not_accepted_for_surgery
- * @property integer $family_education
- * @property integer $surgery_not_needed
- * @property integer $other
  * @property integer $other_comments
  *
  * The followings are the available model relations:
@@ -42,8 +38,6 @@
 
 class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 {
-	public $service;
-
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -67,9 +61,9 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, requested_by_id, not_accepted_for_surgery, family_education, surgery_not_needed, other, other_comments, ', 'safe'),
-			array('requested_by_id, not_accepted_for_surgery, family_education, surgery_not_needed, other, other_comments, ', 'required'),
-			array('id, event_id, requested_by_id, not_accepted_for_surgery, family_education, surgery_not_needed, other, other_comments, ', 'safe', 'on' => 'search'),
+			array('event_id, requested_by_id, reason_id, other_comments, ', 'safe'),
+			array('requested_by_id, reason_id', 'required'),
+			array('id, event_id, requested_by_id, reason_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -85,6 +79,7 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'requested_by' => array(self::BELONGS_TO, 'OphNuCounselling_Consultation_RequestedBy', 'requested_by_id'),
+			'reason' => array(self::BELONGS_TO, 'OphNuCounselling_Consultation_Reason', 'reason_id'),
 		);
 	}
 
@@ -96,12 +91,13 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'requested_by_id' => 'Who requested the consult',
-			'not_accepted_for_surgery' => 'Not Accepted for Surgery',
-			'family_education' => 'Family Education',
+			'requested_by_id' => 'Who requested the consultation',
+			'not_accepted_for_surgery' => 'Not accepted for surgery',
+			'family_education' => 'Family education',
 			'surgery_not_needed' => 'Surgery not needed',
 			'other' => 'Other',
-			'other_comments' => 'Other Comments',
+			'other_comments' => 'Other reason',
+			'reason_id' => 'Reason for consultation',
 		);
 	}
 
@@ -127,12 +123,15 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 		));
 	}
 
-
-
-	protected function afterSave()
+	public function beforeValidate()
 	{
+		if ($this->reason && $this->reason->name == 'Other (please specify)') {
+			if (!$this->other_comments) {
+				$this->addError('other_comments','Please specify the reason for the consultation');
+			}
+		}
 
-		return parent::afterSave();
+		return parent::beforeValidate();
 	}
 }
 ?>

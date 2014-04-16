@@ -17,7 +17,7 @@
  */
 
 /**
- * This is the model class for table "ophnucounselling_caregivers_name".
+ * This is the model class for table "ophnucounselling_post_emotion_assignment".
  *
  * The followings are the available columns in table:
  * @property string $id
@@ -32,7 +32,7 @@
  * @property User $usermodified
  */
 
-class OphNuCounselling_CareGivers_Name extends BaseActiveRecord
+class OphNuCounselling_Post_Emotion_Assignment extends BaseActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -48,7 +48,7 @@ class OphNuCounselling_CareGivers_Name extends BaseActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ophnucounselling_caregivers_name';
+		return 'ophnucounselling_post_emotion_assignment';
 	}
 
 	/**
@@ -57,8 +57,7 @@ class OphNuCounselling_CareGivers_Name extends BaseActiveRecord
 	public function rules()
 	{
 		return array(
-			array('name', 'safe'),
-			array('name', 'required'),
+			array('element_id, emotion_id', 'safe'),
 			array('id, name', 'safe', 'on' => 'search'),
 		);
 	}

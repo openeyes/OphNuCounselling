@@ -27,12 +27,36 @@
 		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
 	</header>
 
-		<div class="element-fields">
-			<?php echo $form->radioBoolean($element, 'wrist_band_verified')?>
-	<?php echo $form->checkBox($element, 'dob')?>
-	<?php echo $form->checkBox($element, 'patient_name')?>
-	<?php echo $form->checkBox($element, 'parent_caregiver')?>
-	<?php echo $form->radioBoolean($element, 'chart_number')?>
+	<div class="element-fields">
+		<div class="row field-row">
+			<div class="large-3 column"><label></label></div>
+			<div class="large-4 column end">
+				<?php echo $form->checkBox($element, 'wrist_band_verified', array('nowrapper' => true))?>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-3 column"><label></label></div>
+			<div class="large-4 column end">
+				<?php echo $form->checkBox($element, 'dob', array('nowrapper' => true))?>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-3 column"><label></label></div>
+			<div class="large-4 column end">
+				<?php echo $form->checkBox($element, 'patient_name', array('nowrapper' => true))?>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-3 column"><label></label></div>
+			<div class="large-4 column end">
+				<?php echo $form->checkBox($element, 'parent_caregiver', array('nowrapper' => true))?>
+			</div>
+		</div>
+		<div class="row field-row">
+			<div class="large-3 column"><label></label></div>
+			<div class="large-4 column end">
+				<?php echo $form->checkBox($element, 'chart_number', array('nowrapper' => true))?>
+			</div>
+		</div>
 	</div>
-	
 </section>
