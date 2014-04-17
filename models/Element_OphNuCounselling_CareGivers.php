@@ -103,10 +103,10 @@ class Element_OphNuCounselling_CareGivers  extends	BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'caregivers_present_id' => 'Caregivers present',
-			'relationship_1_name' => 'Caregiver name',
+			'caregivers_present_id' => 'Care givers present',
+			'relationship_1_name' => 'Care giver name',
 			'relationship_1_id' => 'Relationship',
-			'relationship_2_name' => 'Caregiver name',
+			'relationship_2_name' => 'Care giver name',
 			'relationship_2_id' => 'Relationship',
 			'sw_present_id' => 'Social workers present',
 			'sw1name' => 'Social worker name',

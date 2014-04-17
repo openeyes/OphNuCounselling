@@ -93,7 +93,7 @@ class Element_OphNuCounselling_PatientId  extends  BaseEventTypeElement
 			'event_id' => 'Event',
 			'wrist_band_verified' => 'Wrist band verified with two identifiers',
 			'dob' => 'DOB',
-			'patient_name' => 'Patient mame',
+			'patient_name' => 'Patient name',
 			'parent_caregiver' => 'Parent caregiver',
 			'chart_number' => 'Chart number',
 		);
