@@ -28,7 +28,7 @@
 	</header>
 
 	<div class="element-fields">
-		<?php echo $form->radioButtons($element, 'caregivers_present_id', 'ophnucounselling_caregivers_caregivers_present', null, false, false, false, false, array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->radioButtons($element, 'caregivers_present_id', CHtml::listData(OphNuCounselling_CareGivers_CaregiversPresent::model()->findAll(array('order'=>'display_order asc')),'id','name'), null, false, false, false, false, array('class' => 'linked-fields', 'data-linked-fields' => 'relationship_1_name,relationship_1_id,relationship_2_name,relationship_2_id', 'data-linked-value' => 'Yes'), array('label' => 3, 'field' => 4))?>
 		<div id="div_Element_OphNuCounselling_CareGivers_relationship_1_name" class="row field-row"<?php if ($element->caregivers_present_id != 1) {?> style="display: none"<?php }?>>
 			<div class="large-3 column">
 				<label for="Element_OphNuCounselling_CareGivers_relationship_1_name"><?php echo $element->getAttributeLabel('relationship_1_name')?>:</label>
@@ -66,7 +66,7 @@
 			</div>
 		</div>
 
-		<?php echo $form->radioButtons($element, 'sw_present_id', 'ophnucounselling_caregivers_sw_present', null, false, false, false, false, array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->radioButtons($element, 'sw_present_id', CHtml::listData(OphNuCounselling_CareGivers_SwPresent::model()->findAll(array('order'=>'display_order asc')),'id','name'), null, false, false, false, false, array('class' => 'linked-fields', 'data-linked-fields' => 'sw1name,sw2name', 'data-linked-value' => 'Yes'), array('label' => 3, 'field' => 4))?>
 
 		<div id="div_Element_OphNuCounselling_CareGivers_sw1name" class="row field-row"<?php if ($element->sw_present_id != 1) {?> style="display: none"<?php }?>>
 			<div class="large-3 column">

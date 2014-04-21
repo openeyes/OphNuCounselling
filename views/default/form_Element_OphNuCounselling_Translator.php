@@ -28,7 +28,7 @@
 	</header>
 
 	<div class="element-fields">
-		<?php echo $form->radioButtons($element, 'translator_present_id', 'ophnueducation_translator_translator_present', null, false, false, false, false, array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->radioButtons($element, 'translator_present_id', CHtml::listData(OphNuCounselling_Translator_TranslatorPresent::model()->findAll(array('order'=>'display_order asc')),'id','name'), null, false, false, false, false, array('class' => 'linked-fields', 'data-linked-fields' => 'name', 'data-linked-value' => 'Yes'), array('label' => 3, 'field' => 4))?>
 		<?php echo $form->textField($element, 'name', array('hide' => !$element->translator_present || $element->translator_present->name != 'Yes'), array(), array('label' => 3, 'field' => 4))?>
 	</div>
 </section>
