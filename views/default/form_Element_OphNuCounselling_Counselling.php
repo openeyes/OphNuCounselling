@@ -29,7 +29,7 @@
 
 	<div class="element-fields">
 		<?php echo $form->multiSelectList($element, 'OphNuCounselling_Pre_Emotions', 'pre_emotions', 'id', $this->getEmotionList($element,'pre_emotions'), array(), array('empty' => '- Please select -', 'label' => 'Pre-counselling emotions'),false,false,null,false,false,array('label' => 3, 'field'=>4))?>
-		<?php echo $form->dropDownList($element, 'counselling_outcome_id', CHtml::listData(OphNuCounselling_CounsellingOutcome_CounsellingOutcome::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -','class' => 'linked-fields', 'data-linked-fields' => 'other_comments', 'data-linked-value' => 'Other (please specify)'),false,array('label'=>3,'field'=>4))?>
+		<?php echo $form->dropDownList($element, 'counselling_outcome_id', CHtml::listData(OphNuCounselling_CounsellingOutcome_CounsellingOutcome::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -','class' => 'linked-fields', 'data-linked-fields' => 'other_comments', 'data-linked-values' => 'Other (please specify)'),false,array('label'=>3,'field'=>4))?>
 		<?php echo $form->textArea($element, 'other_comments', array(), !$element->counselling_outcome || $element->counselling_outcome->name != 'Other (please specify)', array(), array('label' => 3, 'field' => 4))?>
 		<?php echo $form->textArea($element, 'comments', array(), false, array(), array('label' => 3, 'field' => 4))?>
 		<?php echo $form->multiSelectList($element, 'OphNuCounselling_Post_Emotions', 'post_emotions', 'id', $this->getEmotionList($element,'post_emotions'), array(), array('empty' => '- Please select -', 'label' => 'Post-counselling emotions'),false,false,null,false,false,array('label' => 3, 'field' => 4))?>
