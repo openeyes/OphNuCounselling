@@ -26,14 +26,18 @@ class DefaultController extends BaseEventTypeController
 	{
 		$pre_emotions = array();
 
-		foreach ($_POST['OphNuCounselling_Pre_Emotions'] as $pre_emotion) {
-			$pre_emotions[] = OphNuCounselling_Emotion::model()->findByPk($pre_emotion);
+		if (!empty($data['OphNuCounselling_Pre_Emotions'])) {
+			foreach ($data['OphNuCounselling_Pre_Emotions'] as $pre_emotion) {
+				$pre_emotions[] = OphNuCounselling_Emotion::model()->findByPk($pre_emotion);
+			}
 		}
 
 		$post_emotions = array();
 
-		foreach ($_POST['OphNuCounselling_Post_Emotions'] as $post_emotion) {
-			$post_emotions[] = OphNuCounselling_Emotion::model()->findByPk($post_emotion);
+		if (!empty($data['OphNuCounselling_Post_Emotions'])) {
+			foreach ($data['OphNuCounselling_Post_Emotions'] as $post_emotion) {
+				$post_emotions[] = OphNuCounselling_Emotion::model()->findByPk($post_emotion);
+			}
 		}
 
 		$element->pre_emotions = $pre_emotions;
