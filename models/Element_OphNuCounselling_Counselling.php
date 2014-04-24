@@ -36,7 +36,7 @@
  * @property OphNuCounselling_CounsellingOutcome_CounsellingOutcome $counselling_outcome
  */
 
-class Element_OphNuCounselling_Counselling extends  BaseEventTypeElement
+class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -61,8 +61,8 @@ class Element_OphNuCounselling_Counselling extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, counselling_outcome_id, other_comments, ', 'safe'),
-			array('counselling_outcome_id', 'required'),
+			array('event_id, counselling_outcome_id, other_comments, translator_present_id, translator_name, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name', 'safe'),
+			array('counselling_outcome_id, translator_present_id, caregivers_present_id, sw_present_id','required'),
 			array('id, event_id, counselling_outcome_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -81,6 +81,12 @@ class Element_OphNuCounselling_Counselling extends  BaseEventTypeElement
 			'pre_emotions' => array(self::MANY_MANY, 'OphNuCounselling_Emotion', 'ophnucounselling_pre_emotion_assignment(element_id, emotion_id)', 'order' => 'pre_emotions.display_order asc'),
 			'post_emotions' => array(self::MANY_MANY, 'OphNuCounselling_Emotion', 'ophnucounselling_post_emotion_assignment(element_id, emotion_id)', 'order' => 'post_emotions.display_order asc'),
 			'counselling_outcome' => array(self::BELONGS_TO, 'OphNuCounselling_CounsellingOutcome_CounsellingOutcome', 'counselling_outcome_id'),
+			'translator_present' => array(self::BELONGS_TO, 'OphNuCounselling_Translator_TranslatorPresent', 'translator_present_id'),
+			'caregivers_present' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_CaregiversPresent', 'caregivers_present_id'),
+			'name' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Name', 'name_id'),
+			'relationship1' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Relationship', 'relationship_1_id'),
+			'relationship2' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_Relationship', 'relationship_2_id'),
+			'sw_present' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_SwPresent', 'sw_present_id'),
 		);
 	}
 
@@ -94,6 +100,16 @@ class Element_OphNuCounselling_Counselling extends  BaseEventTypeElement
 			'event_id' => 'Event',
 			'counselling_outcome_id' => 'Counselling outcome',
 			'other_comments' => 'Other outcome',
+			'translator_present_id' => 'Translator present',
+			'translator_name' => 'Translator name',
+			'caregivers_present_id' => 'Care givers present',
+			'relationship_1_name' => 'Care giver name',
+			'relationship_1_id' => 'Relationship',
+			'relationship_2_name' => 'Care giver name',
+			'relationship_2_id' => 'Relationship',
+			'sw_present_id' => 'Social workers present',
+			'sw1name' => 'Social worker name',
+			'sw2name' => 'Social worker name',
 		);
 	}
 
@@ -129,6 +145,29 @@ class Element_OphNuCounselling_Counselling extends  BaseEventTypeElement
 
 		if (!$this->post_emotions) {
 			$this->addError('post_emotions','Please select at least one post-counselling emotion');
+		}
+
+		if ($this->translator_present && $this->translator_present->name == 'Yes' && strlen($this->translator_name) <1) {
+			$this->addError('translator_name',$this->getAttributeLabel('translator_name').' cannot be blank.');
+		}
+
+		if ($this->caregivers_present && $this->caregivers_present->name == 'Yes') {
+			if (!$this->relationship_1_name && !$this->relationship_2_name) {
+				$this->addError('relationship_1_name','You must enter at least one caregiver name');
+			} else {
+				if ($this->relationship_1_name && !$this->relationship_1_id) {
+					$this->addError('relationship_1_id',"Please specify the first caregivers relationship");
+				}
+				if ($this->relationship_2_name && !$this->relationship_2_id) {
+					$this->addError('relationship_2_id',"Please specify the second caregivers relationship");
+				}
+			}
+		}
+
+		if ($this->sw_present && $this->sw_present->name == 'Yes') {
+			if (!$this->sw1name && !$this->sw2name) {
+				$this->addError('sw1name','You must enter at least one social worker name');
+			}
 		}
 
 		return parent::beforeValidate();
