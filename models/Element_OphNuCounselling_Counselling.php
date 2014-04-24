@@ -110,8 +110,8 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 			'sw_present_id' => 'Social workers present',
 			'sw1name' => 'Social worker name',
 			'sw2name' => 'Social worker name',
-			'pre_emotions' => 'Pre-counseling emotional state',
-			'post_emotions' => 'Post-counseling emotional state',
+			'pre_emotions' => 'Pre-counseling emotional status',
+			'post_emotions' => 'Post-counseling emotional status',
 		);
 	}
 
