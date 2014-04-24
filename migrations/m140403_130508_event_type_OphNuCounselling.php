@@ -5,21 +5,21 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 	{
 		if (!$this->dbConnection->createCommand()->select('id')->from('event_type')->where('class_name=:class_name', array(':class_name'=>'OphNuCounselling'))->queryRow()) {
 			$group = $this->dbConnection->createCommand()->select('id')->from('event_group')->where('name=:name',array(':name'=>'Nursing'))->queryRow();
-			$this->insert('event_type', array('class_name' => 'OphNuCounselling', 'name' => 'Counselling','event_group_id' => $group['id']));
+			$this->insert('event_type', array('class_name' => 'OphNuCounselling', 'name' => 'Patient Counseling','event_group_id' => $group['id']));
 		}
 
 		$event_type = $this->dbConnection->createCommand()->select('id')->from('event_type')->where('class_name=:class_name', array(':class_name'=>'OphNuCounselling'))->queryRow();
 
-		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Patient ID',':eventTypeId'=>$event_type['id']))->queryRow()) {
-			$this->insert('element_type', array('name' => 'Patient ID','class_name' => 'Element_OphNuCounselling_PatientId', 'event_type_id' => $event_type['id'], 'display_order' => 1));
+		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Patient ID verification',':eventTypeId'=>$event_type['id']))->queryRow()) {
+			$this->insert('element_type', array('name' => 'Patient ID verification','class_name' => 'Element_OphNuCounselling_PatientId', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Patient ID'))->queryRow();
-		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Consultation',':eventTypeId'=>$event_type['id']))->queryRow()) {
-			$this->insert('element_type', array('name' => 'Consultation','class_name' => 'Element_OphNuCounselling_Consultation', 'event_type_id' => $event_type['id'], 'display_order' => 1));
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Patient ID verification'))->queryRow();
+		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Consultation history',':eventTypeId'=>$event_type['id']))->queryRow()) {
+			$this->insert('element_type', array('name' => 'Consultation history','class_name' => 'Element_OphNuCounselling_Consultation', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Consultation'))->queryRow();
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Consultation history'))->queryRow();
 		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Translator',':eventTypeId'=>$event_type['id']))->queryRow()) {
 			$this->insert('element_type', array('name' => 'Translator','class_name' => 'Element_OphNuCounselling_Translator', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
@@ -35,16 +35,16 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 		}
 
 		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Pre counselling emotions'))->queryRow();
-		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Counselling Outcome',':eventTypeId'=>$event_type['id']))->queryRow()) {
-			$this->insert('element_type', array('name' => 'Counselling Outcome','class_name' => 'Element_OphNuCounselling_CounsellingOutcome', 'event_type_id' => $event_type['id'], 'display_order' => 1));
+		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Counseling Outcome',':eventTypeId'=>$event_type['id']))->queryRow()) {
+			$this->insert('element_type', array('name' => 'Counseling Outcome','class_name' => 'Element_OphNuCounselling_CounsellingOutcome', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Counselling Outcome'))->queryRow();
-		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Counselling Comments',':eventTypeId'=>$event_type['id']))->queryRow()) {
-			$this->insert('element_type', array('name' => 'Counselling Comments','class_name' => 'Element_OphNuCounselling_CounsellingComments', 'event_type_id' => $event_type['id'], 'display_order' => 1));
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Counseling Outcome'))->queryRow();
+		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Counseling Comments',':eventTypeId'=>$event_type['id']))->queryRow()) {
+			$this->insert('element_type', array('name' => 'Counseling Comments','class_name' => 'Element_OphNuCounselling_CounsellingComments', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
 
-		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Counselling Comments'))->queryRow();
+		$element_type = $this->dbConnection->createCommand()->select('id')->from('element_type')->where('event_type_id=:eventTypeId and name=:name', array(':eventTypeId'=>$event_type['id'],':name'=>'Counseling Comments'))->queryRow();
 		if (!$this->dbConnection->createCommand()->select('id')->from('element_type')->where('name=:name and event_type_id=:eventTypeId', array(':name'=>'Post Counselling Status',':eventTypeId'=>$event_type['id']))->queryRow()) {
 			$this->insert('element_type', array('name' => 'Post Counselling Status','class_name' => 'Element_OphNuCounselling_PostCounsellingStatus', 'event_type_id' => $event_type['id'], 'display_order' => 1));
 		}
@@ -103,7 +103,8 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 		$this->insert('ophnucounselling_consultation_requested_by',array('name'=>'Anesthesia','display_order'=>2));
 		$this->insert('ophnucounselling_consultation_requested_by',array('name'=>'Patient','display_order'=>3));
 		$this->insert('ophnucounselling_consultation_requested_by',array('name'=>'Caregiver','display_order'=>4));
-		$this->insert('ophnucounselling_consultation_requested_by',array('name'=>'Other','display_order'=>5));
+		$this->insert('ophnucounselling_consultation_requested_by',array('name'=>'Surgery','display_order'=>5));
+		$this->insert('ophnucounselling_consultation_requested_by',array('name'=>'Other','display_order'=>6));
 
 
 

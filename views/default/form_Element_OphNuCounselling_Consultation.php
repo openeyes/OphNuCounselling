@@ -28,8 +28,17 @@
 	</header>
 
 	<div class="element-fields">
-		<?php echo $form->dropDownList($element, 'requested_by_id', CHtml::listData(OphNuCounselling_Consultation_RequestedBy::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('empty'=>'- Please select -'),false,array('label' => 3,'field' => 4))?>
-		<?php echo $form->dropDownList($element, 'reason_id', CHtml::listData(OphNuCounselling_Consultation_Reason::model()->findAll(array('order' => 'display_order asc')),'id','name'), array('empty' => '- Please select -','class' => 'linked-fields', 'data-linked-fields' => 'other_comments', 'data-linked-values' => 'Other (please specify)'),false,array('label' => 3, 'field' => 4))?>
-		<?php echo $form->textArea($element, 'other_comments', array(), !$element->reason || $element->reason->name != 'Other (please specify)', array(), array('label' => 3, 'field' => 4))?>
+		<div id="div_Element_OphNuCounselling_Consultation_requested_by_id" class="row field-row">
+			<div class="large-3 column">
+				<label for="Element_OphNuCounselling_Consultation_requested_by_id">
+					<?php echo $element->getAttributeLabel('requested_by_id')?>?
+				</label>
+			</div>
+			<div class="large-4 column end">
+				<?php echo $form->dropDownList($element, 'requested_by_id', CHtml::listData(OphNuCounselling_Consultation_RequestedBy::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('nowrapper' => true, 'empty'=>'- Please select -'),false,array('label' => 3,'field' => 4))?>
+			</div>
+		</div>
+		<?php echo $form->multiSelectList($element, 'OphNuCounselling_Reasons', 'reasons', 'id', $this->getReasonList($element,'reasons'), array(), array('class' => 'linked-fields', 'data-linked-fields' => 'other_comments', 'data-linked-values' => 'Other (please specify)', 'empty' => '- Please select -', 'label' => 'Reason(s) for consultation'),false,false,null,false,false,array('label' => 3, 'field'=>4))?>
+		<?php echo $form->textArea($element, 'other_comments', array(), !$element->hasMultiSelectValue('reasons','Other (please specify)'), array(), array('label' => 3, 'field' => 4))?>
 	</div>
 </section>

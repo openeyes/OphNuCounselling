@@ -14,6 +14,18 @@ class DefaultController extends BaseEventTypeController
 		return $list;
 	}
 
+	public function getReasonList($element, $relation)
+	{
+		$list = CHtml::listData(OphNuCounselling_Consultation_Reason::model()->findAll(array('order'=>'display_order asc')),'id','name');
+		$curr_list = CHtml::listData($element->$relation , 'id', 'name');
+		if ($missing = array_diff($curr_list, $list)) {
+			foreach ($missing as $id => $name) {
+				$list[$id] =	$name;
+			}
+		}
+		return $list;
+	}
+
 	/**
 	 * associate the answers and risks from the data with the Element_OphNuCounselling_Counselling element for
 	 * validation
@@ -55,5 +67,26 @@ class DefaultController extends BaseEventTypeController
 	{
 		$element->updatePreEmotions($data['OphNuCounselling_Pre_Emotions']);
 		$element->updatePostEmotions($data['OphNuCounselling_Post_Emotions']);
+	}
+
+	protected function setComplexAttributes_Element_OphNuCounselling_Consultation($element, $data, $index)
+	{
+		$reasons = array();
+
+		if (!empty($data['OphNuCounselling_Reasons'])) {
+			foreach ($data['OphNuCounselling_Reasons'] as $reason_id) {
+				$assignment = new OphNuCounselling_Consultation_Reason_Assignment;
+				$assignment->reason_id = $reason_id;
+
+				$reasons[] = $assignment;
+			}
+		}
+
+		$element->reasons = $reasons;
+	}
+
+	protected function saveComplexAttributes_Element_OphNuCounselling_Consultation($element, $data, $index)
+	{
+		$element->updateReasons($data['OphNuCounselling_Reasons']);
 	}
 }

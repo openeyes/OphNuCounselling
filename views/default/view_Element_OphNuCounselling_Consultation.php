@@ -30,9 +30,19 @@
 		</div>
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('reason_id'))?>:</div></div>
-			<div class="large-9 column end"><div class="data-value"><?php echo $element->reason->name?></div></div>
+			<div class="large-9 column end">
+				<div class="data-value">
+					<?php if (empty($element->reasons)) {?>
+						None
+					<?php }else{
+						foreach ($element->reasons as $reason) {
+							echo $reason->name."<br/>";
+						}
+					}?>
+				</div>
+			</div>
 		</div>
-		<?php if ($element->reason->name == 'Other (please specify)') {?>
+		<?php if ($element->hasMultiSelectValue('reasons','Other (please specify)')) {?>
 			<div class="row data-row">
 				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('other_comments'))?>:</div></div>
 				<div class="large-9 column end"><div class="data-value"><?php echo $element->other_comments?></div></div>

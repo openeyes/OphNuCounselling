@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -18,13 +17,11 @@
  */
 
 /**
- * This is the model class for table "et_ophnucounselling_consultation".
+ * This is the model class for table "ophnucounselling_consultation_reason_assignment".
  *
  * The followings are the available columns in table:
  * @property string $id
- * @property integer $event_id
- * @property integer $requested_by_id
- * @property integer $other_comments
+ * @property string $name
  *
  * The followings are the available model relations:
  *
@@ -33,10 +30,9 @@
  * @property Event $event
  * @property User $user
  * @property User $usermodified
- * @property OphNuCounselling_Consultation_RequestedBy $requested_by
  */
 
-class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
+class OphNuCounselling_Consultation_Reason_Assignment extends BaseActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -52,7 +48,7 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 	 */
 	public function tableName()
 	{
-		return 'et_ophnucounselling_consultation';
+		return 'ophnucounselling_consultation_reason_assignment';
 	}
 
 	/**
@@ -61,9 +57,9 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, requested_by_id, other_comments, ', 'safe'),
-			array('requested_by_id', 'required'),
-			array('id, event_id, requested_by_id, reason_id, other_comments, ', 'safe', 'on' => 'search'),
+			array('reason_id', 'safe'),
+			array('reason_id', 'required'),
+			array('id, name', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -78,8 +74,7 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'requested_by' => array(self::BELONGS_TO, 'OphNuCounselling_Consultation_RequestedBy', 'requested_by_id'),
-			'reasons' => array(self::MANY_MANY, 'OphNuCounselling_Consultation_Reason', 'ophnucounselling_consultation_reason_assignment(element_id, reason_id)'),
+			'reason' => array(self::BELONGS_TO, 'OphNuCounselling_Consultation_Reason', 'reason_id'),
 		);
 	}
 
@@ -90,14 +85,7 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 	{
 		return array(
 			'id' => 'ID',
-			'event_id' => 'Event',
-			'requested_by_id' => 'Who requested the consultation',
-			'not_accepted_for_surgery' => 'Not accepted for surgery',
-			'family_education' => 'Family education',
-			'surgery_not_needed' => 'Surgery not needed',
-			'other' => 'Other',
-			'other_comments' => 'Other reason',
-			'reason_id' => 'Reason for consultation',
+			'name' => 'Name',
 		);
 	}
 
@@ -110,57 +98,16 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id, true);
-		$criteria->compare('event_id', $this->event_id, true);
-		$criteria->compare('requested_by_id', $this->requested_by_id);
-		$criteria->compare('not_accepted_for_surgery', $this->not_accepted_for_surgery);
-		$criteria->compare('family_education', $this->family_education);
-		$criteria->compare('surgery_not_needed', $this->surgery_not_needed);
-		$criteria->compare('other', $this->other);
-		$criteria->compare('other_comments', $this->other_comments);
+		$criteria->compare('name', $this->name, true);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
 	}
 
-	public function beforeValidate()
+	public function getName()
 	{
-		if (empty($this->reasons)) {
-			$this->addError('reasons','Please enter at least one reason for the consultation');
-		} else if ($this->hasMultiSelectValue('reasons','Other (please specify)')) {
-			if (!$this->other_comments) {
-				$this->addError('other_comments','Please specify the other reason for the consultation');
-			}
-		}
-
-		return parent::beforeValidate();
-	}
-
-	public function updateReasons($reason_ids)
-	{
-		$ids = array();
-
-		foreach ($reason_ids as $reason_id) {
-			if (!$assignment = OphNuCounselling_Consultation_Reason_Assignment::model()->find('element_id=? and reason_id=?',array($this->id,$reason_id))) {
-				$assignment = new OphNuCounselling_Consultation_Reason_Assignment;
-				$assignment->element_id = $this->id;
-				$assignment->reason_id = $reason_id;
-
-				if (!$assignment->save()) {
-					throw new Exception("Unable to save assignment: ".print_r($assignment->getErrors(),true));
-				}
-			}
-
-			$ids[] = $assignment->id;
-		}
-
-		$criteria = new CDbCriteria;
-		$criteria->addCondition('element_id = :element_id');
-		$criteria->params[':element_id'] = $this->id;
-
-		!empty($ids) && $criteria->addNotInCondition('id',$ids);
-
-		OphNuCounselling_Consultation_Reason_Assignment::model()->deleteAll($criteria);
+		return $this->reason->name;
 	}
 }
 ?>
