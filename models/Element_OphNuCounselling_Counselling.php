@@ -98,7 +98,7 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'counselling_outcome_id' => 'Counselling outcome',
+			'counselling_outcome_id' => 'Counseling outcome',
 			'other_comments' => 'Other outcome',
 			'translator_present_id' => 'Translator present',
 			'translator_name' => 'Translator name',
@@ -110,6 +110,8 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 			'sw_present_id' => 'Social workers present',
 			'sw1name' => 'Social worker name',
 			'sw2name' => 'Social worker name',
+			'pre_emotions' => 'Pre-counseling emotional state',
+			'post_emotions' => 'Post-counseling emotional state',
 		);
 	}
 
