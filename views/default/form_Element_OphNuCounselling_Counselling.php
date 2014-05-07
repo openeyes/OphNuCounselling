@@ -44,7 +44,7 @@
 						<label for="Element_OphNuCounselling_Counselling_relationship_1_id"><?php echo $element->getAttributeLabel('relationship_1_id')?>:</label>
 					</div>
 					<div class="large-3 column end">
-						<?php echo $form->dropDownList($element, 'relationship_1_id', CHtml::listData(OphNuEducation_CareGivers_Relationship1::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('nowrapper' =>
+						<?php echo $form->dropDownList($element, 'relationship_1_id', CHtml::listData(OphNuCounselling_CareGivers_Relationship::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('nowrapper' =>
  true, 'empty'=>'- Please select -'))?>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 						<label for="Element_OphNuCounselling_Counselling_relationship_2_id"><?php echo $element->getAttributeLabel('relationship_2_id')?>:</label>
 					</div>
 					<div class="large-3 column end">
-						<?php echo $form->dropDownList($element, 'relationship_2_id', CHtml::listData(OphNuEducation_CareGivers_Relationship1::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('nowrapper' => true, 'empty'=>'- Please select -'))?>
+						<?php echo $form->dropDownList($element, 'relationship_2_id', CHtml::listData(OphNuCounselling_CareGivers_Relationship2::model()->findAll(array('order'=> 'display_order asc')),'id','name'),array('nowrapper' => true, 'empty'=>'- Please select -'))?>
 					</div>
 				</div>
 			</div>
