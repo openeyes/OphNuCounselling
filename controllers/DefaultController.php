@@ -89,4 +89,25 @@ class DefaultController extends BaseEventTypeController
 	{
 		$element->updateReasons($data['OphNuCounselling_Reasons']);
 	}
+
+	protected function setComplexAttributes_Element_OphNuCounselling_PatientId($element, $data, $index)
+	{
+		$identifiers = array();
+
+		if (!empty($data['MultiSelect_identifiers'])) {
+			foreach ($data['MultiSelect_identifiers'] as $identifier_id) {
+				$assignment = new OphNuCounselling_PatientId_Identifier_Assignment;
+				$assignment->identifier_id = $identifier_id;
+
+				$identifiers[] = $assignment;
+			}
+		}
+
+		$element->identifiers = $identifiers;
+	}
+
+	protected function saveComplexAttributes_Element_OphNuCounselling_PatientId($element, $data, $index)
+	{
+		$element->updateMultiSelectData('OphNuCounselling_PatientId_Identifier_Assignment',empty($data['MultiSelect_identifiers']) ? array() : $data['MultiSelect_identifiers'],'identifier_id');
+	}
 }
