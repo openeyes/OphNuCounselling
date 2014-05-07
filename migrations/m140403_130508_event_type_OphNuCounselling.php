@@ -250,8 +250,8 @@ class m140403_130508_event_type_OphNuCounselling extends CDbMigration
 				'CONSTRAINT `ophnucounselling_caregivers_relationship2_cui_fk` FOREIGN KEY (`created_user_id`) REFERENCES `user` (`id`)',
 			), 'ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin');
 
-		$this->insert('ophnucounselling_caregivers_relationship2',array('name'=>'mother','display_order'=>1));
-		$this->insert('ophnucounselling_caregivers_relationship2',array('name'=>'father','display_order'=>2));
+		$this->insert('ophnucounselling_caregivers_relationship2',array('name'=>'Mother','display_order'=>1));
+		$this->insert('ophnucounselling_caregivers_relationship2',array('name'=>'Father','display_order'=>2));
 
 		$this->createTable('ophnucounselling_caregivers_sw_present', array(
 				'id' => 'int(10) unsigned NOT NULL AUTO_INCREMENT',
