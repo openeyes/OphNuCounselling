@@ -93,13 +93,13 @@
 		<?php if ($element->counselling_outcome && $element->counselling_outcome->name == 'Other (please specify)') {?>
 			<div class="row data-row">
 				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('other_comments'))?>:</div></div>
-				<div class="large-9 column end"><div class="data-value"><?php echo CHtml::encode($element->other_comments)?></div></div>
+				<div class="large-9 column end"><div class="data-value"><?php echo $element->textWithLineBreaks('other_comments')?></div></div>
 			</div>
 		<?php }?>
 		<?php if ($element->comments) {?>
 			<div class="row data-row">
 				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('comments'))?>:</div></div>
-				<div class="large-9 column end"><div class="data-value"><?php echo CHtml::encode($element->comments)?></div></div>
+				<div class="large-9 column end"><div class="data-value"><?php echo $element->textWithLineBreaks('comments')?></div></div>
 			</div>
 		<?php }?>
 		<div class="row data-row">

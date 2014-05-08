@@ -61,7 +61,7 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, counselling_outcome_id, other_comments, translator_present_id, translator_name, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name', 'safe'),
+			array('event_id, counselling_outcome_id, other_comments, translator_present_id, translator_name, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name, comments', 'safe'),
 			array('id, event_id, counselling_outcome_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
