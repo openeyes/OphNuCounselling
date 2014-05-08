@@ -61,7 +61,6 @@ class Element_OphNuCounselling_PatientSatisfaction  extends  BaseEventTypeElemen
 	{
 		return array(
 			array('event_id, satisfaction_level, reason_for_satisfaction_level, ', 'safe'),
-			array('satisfaction_level, reason_for_satisfaction_level, ', 'required'),
 			array('id, event_id, satisfaction_level, reason_for_satisfaction_level, ', 'safe', 'on' => 'search'),
 		);
 	}

@@ -62,7 +62,6 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 	{
 		return array(
 			array('event_id, requested_by_id, other_comments, ', 'safe'),
-			array('requested_by_id', 'required'),
 			array('id, event_id, requested_by_id, reason_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -125,9 +124,7 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 
 	public function beforeValidate()
 	{
-		if (empty($this->reasons)) {
-			$this->addError('reasons','Please enter at least one reason for the consultation');
-		} else if ($this->hasMultiSelectValue('reasons','Other (please specify)')) {
+		if ($this->hasMultiSelectValue('reasons','Other (please specify)')) {
 			if (!$this->other_comments) {
 				$this->addError('other_comments','Please specify the other reason for the consultation');
 			}

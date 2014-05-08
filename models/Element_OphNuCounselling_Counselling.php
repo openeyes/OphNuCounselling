@@ -62,7 +62,6 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 	{
 		return array(
 			array('event_id, counselling_outcome_id, other_comments, translator_present_id, translator_name, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name', 'safe'),
-			array('counselling_outcome_id, translator_present_id, caregivers_present_id, sw_present_id','required'),
 			array('id, event_id, counselling_outcome_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -139,14 +138,6 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 			if (!$this->other_comments) {
 				$this->addError('other_comments','Please specify the counselling outcome');
 			}
-		}
-
-		if (!$this->pre_emotions) {
-			$this->addError('pre_emotions','Please select at least one pre-counselling emotion');
-		}
-
-		if (!$this->post_emotions) {
-			$this->addError('post_emotions','Please select at least one post-counselling emotion');
 		}
 
 		if ($this->translator_present && $this->translator_present->name == 'Yes' && strlen($this->translator_name) <1) {

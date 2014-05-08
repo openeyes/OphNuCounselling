@@ -26,9 +26,9 @@
 	<div class="element-data">
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('translator_present_id'))?>:</div></div>
-			<div class="large-9 column end"><div class="data-value"><?php echo $element->translator_present ? $element->translator_present->name : 'None'?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->translator_present ? $element->translator_present->name : 'Not recorded'?></div></div>
 		</div>
-		<?php if ($element->translator_present->name == 'Yes') {?>
+		<?php if ($element->translator_present && $element->translator_present->name == 'Yes') {?>
 			<div class="row data-row">
 				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('translator_name'))?>:</div></div>
 				<div class="large-9 column end"><div class="data-value"><?php echo CHtml::encode($element->translator_name)?></div></div>
@@ -41,7 +41,7 @@
 			<div class="large-9 column end">
 				<div class="data-value">
 					<?php if (empty($element->pre_emotions)) {?>
-						None
+						Not recorded
 					<?php }else{
 						foreach ($element->pre_emotions as $pre_emotion) {
 							echo $pre_emotion->name."<br/>";
@@ -52,9 +52,9 @@
 		</div>
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('caregivers_present_id'))?>:</div></div>
-			<div class="large-9 column end"><div class="data-value"><?php echo $element->caregivers_present ? $element->caregivers_present->name : 'None'?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->caregivers_present ? $element->caregivers_present->name : 'Not recorded'?></div></div>
 		</div>
-		<?php if ($element->caregivers_present->name == 'Yes') {?>
+		<?php if ($element->caregivers_present && $element->caregivers_present->name == 'Yes') {?>
 			<?php if ($element->relationship_1_name) {?>
 				<div class="row data-row">
 					<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('relationship_1_name'))?>:</div></div>
@@ -70,9 +70,9 @@
 		<?php }?>
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('sw_present_id'))?>:</div></div>
-			<div class="large-9 column end"><div class="data-value"><?php echo $element->sw_present ? $element->sw_present->name : 'None'?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->sw_present ? $element->sw_present->name : 'Not recorded'?></div></div>
 		</div>
-		<?php if ($element->sw_present->name == 'Yes') {?>
+		<?php if ($element->sw_present && $element->sw_present->name == 'Yes') {?>
 			<?php if ($element->sw1name) {?>
 				<div class="row data-row">
 					<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('sw1name'))?>:</div></div>
@@ -88,9 +88,9 @@
 		<?php }?>
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('counselling_outcome_id'))?>:</div></div>
-			<div class="large-9 column end"><div class="data-value"><?php echo $element->counselling_outcome ? $element->counselling_outcome->name : 'None'?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->counselling_outcome ? $element->counselling_outcome->name : 'Not recorded'?></div></div>
 		</div>
-		<?php if ($element->counselling_outcome->name == 'Other (please specify)') {?>
+		<?php if ($element->counselling_outcome && $element->counselling_outcome->name == 'Other (please specify)') {?>
 			<div class="row data-row">
 				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('other_comments'))?>:</div></div>
 				<div class="large-9 column end"><div class="data-value"><?php echo CHtml::encode($element->other_comments)?></div></div>
@@ -109,7 +109,7 @@
 			<div class="large-9 column end">
 				<div class="data-value">
 					<?php if (empty($element->post_emotions)) {?>
-						None
+						Not recorded
 					<?php }else{
 						foreach ($element->post_emotions as $post_emotion) {
 							echo $post_emotion->name."<br/>";

@@ -65,8 +65,8 @@ class DefaultController extends BaseEventTypeController
 	 */
 	protected function saveComplexAttributes_Element_OphNuCounselling_Counselling($element, $data, $index)
 	{
-		$element->updatePreEmotions($data['OphNuCounselling_Pre_Emotions']);
-		$element->updatePostEmotions($data['OphNuCounselling_Post_Emotions']);
+		$element->updatePreEmotions(empty($data['OphNuCounselling_Pre_Emotions']) ? array() : $data['OphNuCounselling_Pre_Emotions']);
+		$element->updatePostEmotions(empty($data['OphNuCounselling_Post_Emotions']) ? array() : $data['OphNuCounselling_Post_Emotions']);
 	}
 
 	protected function setComplexAttributes_Element_OphNuCounselling_Consultation($element, $data, $index)
@@ -87,7 +87,7 @@ class DefaultController extends BaseEventTypeController
 
 	protected function saveComplexAttributes_Element_OphNuCounselling_Consultation($element, $data, $index)
 	{
-		$element->updateReasons($data['OphNuCounselling_Reasons']);
+		$element->updateReasons(empty($data['OphNuCounselling_Reasons']) ? array() : $data['OphNuCounselling_Reasons']);
 	}
 
 	protected function setComplexAttributes_Element_OphNuCounselling_PatientId($element, $data, $index)

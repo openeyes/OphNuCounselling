@@ -26,14 +26,14 @@
 	<div class="element-data">
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('requested_by_id'))?>:</div></div>
-			<div class="large-9 column end"><div class="data-value"><?php echo $element->requested_by ? $element->requested_by->name : 'None'?></div></div>
+			<div class="large-9 column end"><div class="data-value"><?php echo $element->requested_by ? $element->requested_by->name : 'Not recorded'?></div></div>
 		</div>
 		<div class="row data-row">
 			<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('reason_id'))?>:</div></div>
 			<div class="large-9 column end">
 				<div class="data-value">
 					<?php if (empty($element->reasons)) {?>
-						None
+						Not recorded
 					<?php }else{
 						foreach ($element->reasons as $reason) {
 							echo $reason->name."<br/>";

@@ -60,7 +60,6 @@ class Element_OphNuCounselling_PatientId	extends  BaseEventTypeElement
 	{
 		return array(
 			array('event_id, wrist_band_verified', 'safe'),
-			array('wrist_band_verified', 'required'),
 			array('id, event_id, wrist_band_verified', 'safe', 'on' => 'search'),
 		);
 	}
