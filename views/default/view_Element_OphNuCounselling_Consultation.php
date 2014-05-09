@@ -45,7 +45,7 @@
 		<?php if ($element->hasMultiSelectValue('reasons','Other (please specify)')) {?>
 			<div class="row data-row">
 				<div class="large-3 column"><div class="data-label"><?php echo CHtml::encode($element->getAttributeLabel('other_comments'))?>:</div></div>
-				<div class="large-9 column end"><div class="data-value"><?php echo $element->other_comments?></div></div>
+				<div class="large-9 column end"><div class="data-value"><?php echo $element->textWithLineBreaks('other_comments')?></div></div>
 			</div>
 		<?php }?>
 	</div>
