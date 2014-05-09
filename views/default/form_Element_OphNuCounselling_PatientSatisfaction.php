@@ -28,7 +28,13 @@
 	</header>
 
 	<div class="element-fields">
-		<?php echo $form->slider($element, 'satisfaction_level', array('min' => 1, 'max' => 10, 'step' => 1), array(), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->slider($element, 'satisfaction_level', array(
+				'min' => 0,
+				'max' => 10,
+				'step' => 1,
+				'painScale' => $this->assetPath."/img/satisfaction_scale.png",
+				'value_display' => false,
+			), array(), array('label' => 3, 'field' => 6))?>
 		<?php echo $form->textArea($element, 'reason_for_satisfaction_level', array(), false, array(), array('label' => 3, 'field' => 4))?>
 	</div>
 </section>

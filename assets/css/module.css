@@ -28,3 +28,9 @@
 .event .event-title {
   background-image: url('../img/medium.png?1397569309');
 }
+
+/* line 27, ../sass/components/_event.scss */
+#Element_OphNuCounselling_PatientSatisfaction_satisfaction_level {
+  margin-left: 0.1em;
+  width: 22em;
+}
