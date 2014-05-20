@@ -17,16 +17,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html The GNU General Public License V3.0
  */
 ?>
-
-<section class="element <?php echo $element->elementType->class_name?>"
-	data-element-type-id="<?php echo $element->elementType->id?>"
-	data-element-type-class="<?php echo $element->elementType->class_name?>"
-	data-element-type-name="<?php echo $element->elementType->name?>"
-	data-element-display-order="<?php echo $element->elementType->display_order?>">
-	<header class="element-header">
-		<h3 class="element-title"><?php echo $element->elementType->name; ?></h3>
-	</header>
-
 	<div class="element-fields">
 		<div id="div_Element_OphNuCounselling_Consultation_requested_by_id" class="row field-row">
 			<div class="large-3 column">
@@ -41,4 +31,3 @@
 		<?php echo $form->multiSelectList($element, 'OphNuCounselling_Reasons', 'reasons', 'id', $this->getReasonList($element,'reasons'), array(), array('class' => 'linked-fields', 'data-linked-fields' => 'other_comments', 'data-linked-values' => 'Other (please specify)', 'empty' => '- Please select -', 'label' => 'Reason(s) for consultation'),false,false,null,false,false,array('label' => 3, 'field'=>4))?>
 		<?php echo $form->textArea($element, 'other_comments', array(), !$element->hasMultiSelectValue('reasons','Other (please specify)'), array(), array('label' => 3, 'field' => 4))?>
 	</div>
-</section>

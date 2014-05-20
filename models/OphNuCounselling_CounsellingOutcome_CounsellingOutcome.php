@@ -32,7 +32,7 @@
  * @property User $usermodified
  */
 
-class OphNuCounselling_CounsellingOutcome_CounsellingOutcome extends BaseActiveRecord
+class OphNuCounselling_CounsellingOutcome_CounsellingOutcome extends BaseActiveRecordVersioned
 {
 	/**
 	 * Returns the static model of the specified AR class.
