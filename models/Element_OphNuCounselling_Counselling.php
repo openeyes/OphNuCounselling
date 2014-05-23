@@ -38,6 +38,8 @@
 
 class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 {
+	protected $auto_update_relations = true;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -61,7 +63,7 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, counselling_outcome_id, other_comments, translator_present_id, translator_name, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name, comments', 'safe'),
+			array('event_id, counselling_outcome_id, other_comments, translator_present_id, translator_name, caregivers_present_id, relationship_1_name, relationship_1_id, relationship_2_name, relationship_2_id, sw_present_id, sw1name, sw2name, comments, pre_emotions, post_emotions', 'safe'),
 			array('id, event_id, counselling_outcome_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -77,8 +79,10 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'pre_emotions' => array(self::MANY_MANY, 'OphNuCounselling_Emotion', 'ophnucounselling_pre_emotion_assignment(element_id, emotion_id)', 'order' => 'pre_emotions.display_order asc'),
-			'post_emotions' => array(self::MANY_MANY, 'OphNuCounselling_Emotion', 'ophnucounselling_post_emotion_assignment(element_id, emotion_id)', 'order' => 'post_emotions.display_order asc'),
+			'pre_emotions' => array(self::HAS_MANY, 'OphNuCounselling_Emotion', 'emotion_id', 'through' => 'pre_emotion_assignment', 'order' => 'pre_emotions.display_order asc'),
+			'pre_emotion_assignment' => array(self::HAS_MANY, 'OphNuCounselling_Pre_Emotion_Assignment', 'element_id'),
+			'post_emotions' => array(self::HAS_MANY, 'OphNuCounselling_Emotion', 'emotion_id', 'through' => 'post_emotion_assignment', 'order' => 'post_emotions.display_order asc'),
+			'post_emotion_assignment' => array(self::HAS_MANY, 'OphNuCounselling_Post_Emotion_Assignment', 'element_id'),
 			'counselling_outcome' => array(self::BELONGS_TO, 'OphNuCounselling_CounsellingOutcome_CounsellingOutcome', 'counselling_outcome_id'),
 			'translator_present' => array(self::BELONGS_TO, 'OphNuCounselling_Translator_TranslatorPresent', 'translator_present_id'),
 			'caregivers_present' => array(self::BELONGS_TO, 'OphNuCounselling_CareGivers_CaregiversPresent', 'caregivers_present_id'),
@@ -165,49 +169,4 @@ class Element_OphNuCounselling_Counselling extends	BaseEventTypeElement
 
 		return parent::beforeValidate();
 	}
-
-	public function updatePreEmotions($emotion_ids)
-	{
-		foreach ($emotion_ids as $emotion_id) {
-			if (!$assignment = OphNuCounselling_Pre_Emotion_Assignment::model()->find('element_id=? and emotion_id=?',array($this->id,$emotion_id))) {
-				$assignment = new OphNuCounselling_Pre_Emotion_Assignment;
-				$assignment->element_id = $this->id;
-				$assignment->emotion_id = $emotion_id;
-
-				if (!$assignment->save()) {
-					throw new Exception("Unable to save pre emotion assignment: ".print_r($assignment->getErrors(),true));
-				}
-			}
-		}
-
-		$criteria = new CDbCriteria;
-		$criteria->addCondition('element_id = :element_id');
-		$criteria->params[':element_id'] = $this->id;
-		$criteria->addNotInCondition('emotion_id',$emotion_ids);
-
-		OphNuCounselling_Pre_Emotion_Assignment::model()->deleteAll($criteria);
-	}
-
-	public function updatePostEmotions($emotion_ids)
-	{
-		foreach ($emotion_ids as $emotion_id) {
-			if (!$assignment = OphNuCounselling_Post_Emotion_Assignment::model()->find('element_id=? and emotion_id=?',array($this->id,$emotion_id))) {
-				$assignment = new OphNuCounselling_Post_Emotion_Assignment;
-				$assignment->element_id = $this->id;
-				$assignment->emotion_id = $emotion_id;
-
-				if (!$assignment->save()) {
-					throw new Exception("Unable to save post emotion assignment: ".print_r($assignment->getErrors(),true));
-				}
-			}
-		}
-
-		$criteria = new CDbCriteria;
-		$criteria->addCondition('element_id = :element_id');
-		$criteria->params[':element_id'] = $this->id;
-		$criteria->addNotInCondition('emotion_id',$emotion_ids);
-
-		OphNuCounselling_Post_Emotion_Assignment::model()->deleteAll($criteria);
-	}
 }
-?>

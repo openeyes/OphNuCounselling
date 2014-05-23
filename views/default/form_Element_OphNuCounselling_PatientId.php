@@ -18,6 +18,6 @@
  */
 ?>
 	<div class="element-fields">
-		<?php echo $form->checkBox($element, 'wrist_band_verified', array('text-align' => 'right','class' => 'linked-fields', 'data-linked-fields' => 'MultiSelect_identifiers', 'data-linked-values' => '1'), array('label' => 3, 'field' => 4))?>
-		<?php echo $form->multiSelectList($element, 'MultiSelect_identifiers', 'identifiers', 'identifier_id', CHtml::listData(OphNuCounselling_PatientId_Identifier::model()->findAll(array('order'=>'display_order asc')),'id','name'), array(), array('empty' => '- Please select -', 'label' => 'Two identifiers'), !$element->wrist_band_verified, false, null, false, false, array('label' => 3, 'field' => 4))?>
+		<?php echo $form->checkBox($element, 'wrist_band_verified', array('text-align' => 'right','class' => 'linked-fields', 'data-linked-fields' => 'identifiers', 'data-linked-values' => '1'), array('label' => 3, 'field' => 4))?>
+		<?php echo $form->multiSelectList($element, 'identifiers', 'identifiers', 'identifier_id', CHtml::listData(OphNuCounselling_PatientId_Identifier::model()->findAll(array('order'=>'display_order asc')),'id','name'), array(), array('empty' => '- Please select -', 'label' => 'Two identifiers'), !$element->wrist_band_verified, false, null, false, false, array('label' => 3, 'field' => 4))?>
 	</div>

@@ -38,6 +38,8 @@
 
 class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 {
+	protected $auto_update_relations = true;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return the static model class
@@ -61,7 +63,7 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, requested_by_id, other_comments, ', 'safe'),
+			array('event_id, requested_by_id, other_comments, reasons', 'safe'),
 			array('id, event_id, requested_by_id, reason_id, other_comments, ', 'safe', 'on' => 'search'),
 		);
 	}
@@ -78,7 +80,8 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
 			'requested_by' => array(self::BELONGS_TO, 'OphNuCounselling_Consultation_RequestedBy', 'requested_by_id'),
-			'reasons' => array(self::MANY_MANY, 'OphNuCounselling_Consultation_Reason', 'ophnucounselling_consultation_reason_assignment(element_id, reason_id)'),
+			'reasons' => array(self::HAS_MANY, 'OphNuCounselling_Consultation_Reason', 'reason_id', 'through' => 'reason_assignment'),
+			'reason_assignment' => array(self::HAS_MANY, 'OphNuCounselling_Consultation_Reason_Assignment', 'element_id'),
 		);
 	}
 
@@ -131,33 +134,6 @@ class Element_OphNuCounselling_Consultation  extends  BaseEventTypeElement
 		}
 
 		return parent::beforeValidate();
-	}
-
-	public function updateReasons($reason_ids)
-	{
-		$ids = array();
-
-		foreach ($reason_ids as $reason_id) {
-			if (!$assignment = OphNuCounselling_Consultation_Reason_Assignment::model()->find('element_id=? and reason_id=?',array($this->id,$reason_id))) {
-				$assignment = new OphNuCounselling_Consultation_Reason_Assignment;
-				$assignment->element_id = $this->id;
-				$assignment->reason_id = $reason_id;
-
-				if (!$assignment->save()) {
-					throw new Exception("Unable to save assignment: ".print_r($assignment->getErrors(),true));
-				}
-			}
-
-			$ids[] = $assignment->id;
-		}
-
-		$criteria = new CDbCriteria;
-		$criteria->addCondition('element_id = :element_id');
-		$criteria->params[':element_id'] = $this->id;
-
-		!empty($ids) && $criteria->addNotInCondition('id',$ids);
-
-		OphNuCounselling_Consultation_Reason_Assignment::model()->deleteAll($criteria);
 	}
 }
 ?>
