@@ -90,7 +90,7 @@ class Element_OphNuCounselling_PatientId	extends  BaseEventTypeElement
 		return array(
 			'id' => 'ID',
 			'event_id' => 'Event',
-			'wrist_band_verified' => 'Patient ID / wristband verified with two identifiers',
+			'wrist_band_verified' => 'Patient ID verified and ID band applied',
 			'identifiers' => 'Two identifiers',
 		);
 	}
