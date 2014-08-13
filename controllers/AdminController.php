@@ -21,49 +21,31 @@ class AdminController extends ModuleAdminController
 {
 	public function actionEditPatientIdentifiers()
 	{
-		$this->render('//admin/generic_admin',array(
-			'title' => 'Patient identifiers',
-			'model' => 'OphNuCounselling_PatientId_Identifier',
-		));
+		$this->genericAdmin('Patient identifiers','OphNuCounselling_PatientId_Identifier');
 	}
 
 	public function actionEditWhoRequestedConsultation()
 	{
-		$this->render('//admin/generic_admin',array(
-			'title' => 'Who requested consultation',
-			'model' => 'OphNuCounselling_Consultation_RequestedBy',
-		));
+		$this->genericAdmin('Who requested consultation','OphNuCounselling_Consultation_RequestedBy');
 	}
 
 	public function actionEditReasonsForConsultation()
 	{
-		$this->render('//admin/generic_admin',array(
-			'title' => 'Reasons for consultation',
-			'model' => 'OphNuCounselling_Consultation_Reason',
-		));
+		$this->genericAdmin('Reasons for consultation','OphNuCounselling_Consultation_Reason');
 	}
 
 	public function actionEditCaregiverRelationships()
 	{
-		$this->render('//admin/generic_admin',array(
-			'title' => 'Caregiver relationships',
-			'model' => 'OphNuCounselling_CareGivers_Relationship',
-		));
+		$this->genericAdmin('Caregiver relationships','OphNuCounselling_CareGivers_Relationship');
 	}
 
 	public function actionEditEmotionalStatus()
 	{
-		$this->render('//admin/generic_admin',array(
-			'title' => 'Emotional status',
-			'model' => 'OphNuCounselling_Emotion',
-		));
+		$this->genericAdmin('Emotional status','OphNuCounselling_Emotion');
 	}
 
 	public function actionEditCounselingOutcome()
 	{
-		$this->render('//admin/generic_admin',array(
-			'title' => 'Counseling outcomes',
-			'model' => 'OphNuCounselling_CounsellingOutcome_CounsellingOutcome',
-		));
+		$this->genericAdmin('Counseling outcomes','OphNuCounselling_CounsellingOutcome_CounsellingOutcome');
 	}
 }
