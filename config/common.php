@@ -20,7 +20,6 @@
 return array(
 	'params' => array(
 		'admin_menu' => array(
-			'Counseling patient identifiers' => '/OphNuCounselling/admin/editPatientIdentifiers',
 			'Who requested consultation' => '/OphNuCounselling/admin/editWhoRequestedConsultation',
 			'Reasons for consultation' => '/OphNuCounselling/admin/editReasonsForConsultation',
 			'Counseling Caregiver relationships' => '/OphNuCounselling/admin/editCaregiverRelationships',
