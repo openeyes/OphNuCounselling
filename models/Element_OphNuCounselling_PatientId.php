@@ -61,7 +61,7 @@ class Element_OphNuCounselling_PatientId	extends  BaseEventTypeElement
 	public function rules()
 	{
 		return array(
-			array('event_id, wrist_band_verified, identifiers', 'safe'),
+			array('event_id, wrist_band_verified', 'safe'),
 			array('id, event_id, wrist_band_verified', 'safe', 'on' => 'search'),
 		);
 	}
@@ -77,8 +77,6 @@ class Element_OphNuCounselling_PatientId	extends  BaseEventTypeElement
 			'event' => array(self::BELONGS_TO, 'Event', 'event_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'created_user_id'),
 			'usermodified' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
-			'identifiers' => array(self::HAS_MANY, 'OphNuCounselling_PatientId_Identifier', 'identifier_id', 'through' => 'identifier_assignment'),
-			'identifier_assignment' => array(self::HAS_MANY, 'OphNuCounselling_PatientId_Identifier_Assignment', 'element_id'),
 		);
 	}
 
@@ -91,7 +89,6 @@ class Element_OphNuCounselling_PatientId	extends  BaseEventTypeElement
 			'id' => 'ID',
 			'event_id' => 'Event',
 			'wrist_band_verified' => 'Patient ID verified and ID band applied',
-			'identifiers' => 'Two identifiers',
 		);
 	}
 
@@ -110,17 +107,6 @@ class Element_OphNuCounselling_PatientId	extends  BaseEventTypeElement
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria' => $criteria,
 		));
-	}
-
-	public function beforeValidate()
-	{
-		if ($this->wrist_band_verified) {
-			if (count($this->identifiers) != 2) {
-				$this->addError('identifiers','Please select exactly 2 identifiers');
-			}
-		}
-
-		return parent::beforeValidate();
 	}
 }
 ?>
